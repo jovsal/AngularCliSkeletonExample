@@ -1,0 +1,170 @@
+Instuctions: 
+
+*check if node is installed 
+	node -v
+	
+*install node > 6.9.0
+	download and install 
+	
+*install angular cli
+	npm install -g @angular/cli
+	
+*create new angular 4 app
+	ng new PracticalTest
+	** wait for installling packages - don`t close the console
+
+*test the app and ports 
+	cd PracticalTest
+	ng serve 
+	ng serve --port 4202
+	
+*create Folder Structure
+	In src/app add folders
+		components/
+			containers/
+			views/
+		routed-components/
+		services/
+		
+	
+*add router
+	In app.component.html :
+		<router-outlet></router-outlet>
+
+	In app.module.ts :
+		1. import { RouterModule, Routes } from '@angular/router';
+		2. @NgModule({ imports:[ 
+				RouterModule.forRoot(appRoutes) 
+				]}
+		3. const appRoutes: Routes = [
+				{ path: '', redirectTo:'home', pathMatch: 'full'},
+				{ path: 'home', component: HomeComponent},
+				{ path: 'route2', component: Route2Component}
+			];
+			
+	**Info for using router
+		
+		Simple router link
+			<a [routerLink]="home"></a>   - absolute path 
+			<a [routerLink]="/home"></a> 	- relative path
+		
+		Empty link just to show click hand, but routing done by code
+			<a [routerLink]="" (click)="onClick()" ></a>  
+			
+			Routing done with code in component:
+			
+			1. import { Router } from '@angular/router';
+			2. constructor( private router: Router ) {  }       					-- inside the class
+			3. onClick() { this.router.navigate(['/user-details']);  }		-- inside the class
+	
+		Sanding parametars through route
+			
+			1. when navigating to that route
+			
+				this._router.navigate([regUsername, 'wall']);												 	- relative
+				this._router.navigate(['/', this.activeUser.username, 'messages']);		- absolute
+				
+			2. in the route place colon(:) before the path varable
+			
+				{ path: ':username/wall', component: ProfileWallPageComponent},
+				
+			3. in the component that handales that routhe 
+				3.1 import {ActivatedRoute, Params } from '@angular/router';
+				3.2 constructor( private route: ActivatedRoute) {}
+				3.3 ngOnInit() {
+							this._route.params.forEach((params: Params) => {
+								this.wallUser = this._userTmpService.getUserByUsername(params['username']);
+								this.wallPosts = this._postTmpService.getAllWallPostForUsername(this.wallUser.username);
+							});
+						}
+				
+		
+*add home component
+	cd routed-components/ 
+	ng g c home
+	
+	*TIP  1.reload - refresh -  2. close console and ng serve again - if not working and everything looks right
+	
+*** Working with http
+	1.import http and map in the component or service
+			import { Http } from '@angular/http';
+			import 'rxjs/add/operator/map';
+		
+	2.inject http
+			constructor(private http: Http ) { }
+
+	3.make a call , in constructor , OnNgInit or onClick()
+			this.http.get(this.apiUrl)
+				.map(res => res.json())
+				.subscribe(us => {
+					this.users = us;
+					console.log(this.users);
+				});
+				
+	4. Create feature.service 
+			import and put it in providers in app.module
+			create methods 
+				getUsers() { return this.http.get(this.apiUrl).map(res => res.json());  }
+			
+			subscribe to it in component where service is injected
+		
+*** Working with viewComponents
+	** conditional and loop
+			*ngIf *ngShow *ngSwitch
+				<div *ngIf="!dataReceived">
+			*ngFor
+				<div *ngFor="let u of users">
+					<app-user-card [user]="u"></app-user-card>
+				</div>
+	** classes and binding events and properties viewChild-elementRef
+	
+		<img src="{{ angularLogo }}">  // stings only
+		<img [src]="angularLogo">      
+		<img bind-src="angularLogo">		// same effect with second one
+		
+		<button [disabled]="buttonStatus">My Button</button>  --- in class buttonStatus = true;
+		<button [disabled]="buttonStatus == 'enabled'">My Button</button> --- in class buttonStatus = 'enabled';
+		
+		<div [ngClass]="{'bg-active': active}" class="border-1-lightgray chat-user" 
+		
+		
+		if(e.srcElement.attributes.class.textContent === 'modal-bg')
+		
+		
+		* ElementRef
+		1. verson 1 - get send element by event 
+		<p #el (click)="onElClick(el)" class="test">test paragraph</p>
+		onElClick(e) {
+			console.log(e.attributes.class.textContent);
+		}
+		
+		2. verson 2 
+		@ViewChild('el') el: ElementRef;
+			console.log(this.el.nativeElement.attributes.class.textContent);
+		
+		
+		<input #searchInput>
+		(click)="searchInput.value=''"
+		
+		
+	** Input Output EventEmiter
+	
+		import { Component, Input, Output, EventEmitter } from '@angular/core';
+		
+		@Input() user;	
+		@Output() close = new EventEmitter();
+		
+		onClick() {
+		 this.close.emit(null);
+		}
+		
+		in parent
+		(close)="OnClose($event)"
+		
+	
+	** Flex Grid and css
+	
+	** import bootstrap
+		1. get link from bootstrap  http://getbootstrap.com/getting-started/#download
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		2. import bootstrap in src/index.html head
