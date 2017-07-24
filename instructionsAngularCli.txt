@@ -11,7 +11,7 @@ Instuctions:
 	
 *create new angular 4 app
 	ng new PracticalTest
-	** wait for installling packages - don`t close the console
+	** wait for installing packages - don`t close the console
 
 *test the app and ports 
 	cd PracticalTest
