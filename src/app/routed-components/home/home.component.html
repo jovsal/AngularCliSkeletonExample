@@ -1,0 +1,9 @@
+<div *ngIf="!dataReceived"><app-spiner></app-spiner></div>
+<div *ngIf="dataReceived" >
+	<div *ngFor="let u of users">
+		<app-user-card [user]="u"></app-user-card>
+	</div>
+</div>
+
+<p #el (click)="onElClick(el)" class="test2">test paragraph</p>
+

@@ -1,0 +1,49 @@
+.main {
+	float:left;
+	margin: 15px;
+	border: 2px solid rgba(133, 111, 111, 0.73);
+	text-align: center;
+	
+	-webkit-box-shadow: 13px 11px 42px -11px rgba(0,0,0,0.75);
+	-moz-box-shadow: 13px 11px 42px -11px rgba(0,0,0,0.75);
+	box-shadow: 13px 11px 42px -11px rgba(0,0,0,0.75);
+	
+	padding-bottom: 10px;
+	
+}
+
+.img-wrapper{
+	
+	
+}
+
+.img-wrapper img {
+	width: 200px;
+}
+
+.username{
+	font-size: 25px;
+  font-weight: bold;
+  margin: 15px;
+}
+
+.followers-main {
+	display: flex;
+  align-items: center;
+ 
+}
+.followers-main > p:nth-child(1) {
+	margin-left: 15px;
+}
+
+.followers-main a {
+	margin-left: 35px;
+}
+
+.followers-number{
+	  font-size: 25px;
+    margin: 0;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
