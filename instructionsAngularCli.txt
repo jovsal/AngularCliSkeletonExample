@@ -34,7 +34,7 @@ Instuctions:
 	In app.module.ts :
 		1. import { RouterModule, Routes } from '@angular/router';
 		2. @NgModule({ imports:[ 
-				RouterModule.forRoot(appRoutes) 
+				RouterModule.forRoot(appRoutes)           // RouterModule.forRoot(appRoutes, { useHash: true })  - for urls with hash
 				]}
 		3. const appRoutes: Routes = [
 				{ path: '', redirectTo:'home', pathMatch: 'full'},
